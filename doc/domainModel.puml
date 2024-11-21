@@ -1,0 +1,10 @@
+@startuml
+object MainMenu
+object User
+object Movie
+object Category
+
+MainMenu *-- User : has a
+Movie *-- Category
+MainMenu *-- Movie
+@enduml

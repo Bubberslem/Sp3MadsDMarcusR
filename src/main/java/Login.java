@@ -6,14 +6,14 @@ import java.util.Scanner;
 public class Login {
     private static final HashMap<String,String> users = new HashMap<>();
 
-    public static void main(String[] args) {
+    public static void login(){
         users.put("Mads", "MonkeyMads");
         users.put("Marcus","Jesperhaderzoom");
 
         Scanner scanner = new Scanner(System.in);
         boolean loggedIn = false;
 
-        System.out.println("Weclome to Kreinerflix!");
+        System.out.println("Welcome to Kreinerflix!");
         System.out.println("Please login to continue.");
 
         while (!loggedIn) {

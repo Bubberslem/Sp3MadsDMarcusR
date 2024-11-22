@@ -1,0 +1,12 @@
+@startuml
+'https://plantuml.com/class-diagram
+!pragma layout smetana
+class Main{
++ static void main(String[] args
+}
+class Login{
+
+}
+
+
+@enduml

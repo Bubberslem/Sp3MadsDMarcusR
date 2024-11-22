@@ -30,6 +30,34 @@ public class Login {
                 System.out.println("Invalid option. Please try again.");
             }
         }
+        Search search = new Search();
+
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\n1. Browse Movies");
+            System.out.println("2. Browse Series");
+            System.out.println("3. Logout");
+            System.out.println("Choose an option: ");
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    search.Search("");
+                    break;
+                    case "2":
+                        System.out.println("Enter a search term: ");
+                        String query = scanner.nextLine();
+                        search.Search(query);
+                        break;
+                case "3":
+                    exit = true;
+                    System.out.println("Logged out. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+
             scanner.close();
         }
         private static boolean login(Scanner scanner){

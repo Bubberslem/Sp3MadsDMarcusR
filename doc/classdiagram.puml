@@ -2,11 +2,24 @@
 'https://plantuml.com/class-diagram
 !pragma layout smetana
 class Main{
-+ static void main(String[] args
++ static void main(String[] args)
 }
 class Login{
-
+- boolean login()
++ void createUser()
++ boolean authenticate()
 }
 
+class Search{
+- ArrayList<String> movies
+- ArrayList<String> series
++ void searchMovies()
++ void searchSeries()
++ void searchCategories()
+}
+
+class Movie{
+
+}
 
 @enduml

@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Login {
     private static final HashMap<String,String> users = new HashMap<>();
+    private static String input;
 
     public static void login() {
         users.put("Mads", "MonkeyMads");
@@ -34,22 +35,33 @@ public class Login {
 
         boolean exit = false;
         while (!exit) {
-            System.out.println("\n1. Browse Movies");
-            System.out.println("2. Browse Series");
-            System.out.println("3. Logout");
+            System.out.println("\n1. Search for Movies");
+            System.out.println("2. Search for Series");
+            System.out.println("3. Browse category");
+            System.out.println("4. Logout");
             System.out.println("Choose an option: ");
             String choice = scanner.nextLine();
 
             switch (choice) {
                 case "1":
-                    search.Search("");
+                    System.out.println("Enter a search term: ");
+                    input = scanner.nextLine();
+                    search.SearchMovies(input);
                     break;
-                    case "2":
+
+                 case "2":
                         System.out.println("Enter a search term: ");
-                        String query = scanner.nextLine();
-                        search.Search(query);
+                        input = scanner.nextLine();
+                        search.SearchSeries(input);
+
                         break;
                 case "3":
+                    System.out.println("Enter a search term: ");
+                     input = scanner.nextLine();
+                    search.SearchSeries(input);
+                    break;
+
+                case "4":
                     exit = true;
                     System.out.println("Logged out. Goodbye!");
                     break;
@@ -79,7 +91,7 @@ public class Login {
         }
 
 
-private static void createUser(Scanner scanner){
+        private static void createUser(Scanner scanner){
             System.out.println("Create a new user.");
             System.out.println("Enter a new username: ");
             String newUsername = scanner.nextLine();
@@ -93,10 +105,7 @@ private static void createUser(Scanner scanner){
                 System.out.println("User created sucessfully! You can now login.");
             }
         }
-
-                private static boolean authenticate (String username, String password){
-                    return users.containsKey(username) && users.get(username).equals(password);
-                }
-
-
-            }
+        public static boolean authenticate (String username, String password){
+            return users.containsKey(username) && users.get(username).equals(password);
+    }
+}

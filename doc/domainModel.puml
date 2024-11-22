@@ -3,8 +3,15 @@ object Login
 object User
 object Movie
 object Category
+object Series
+object Episodes
+object Season
+
 
 Login *-- User : has a
 Movie *-- Category
 Login *-- Movie
+Series *-- Season
+Season *-- Episodes
+Series *-- Category
 @enduml

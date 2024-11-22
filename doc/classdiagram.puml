@@ -10,9 +10,9 @@ class Login{
 + boolean authenticate()
 }
 
-class Search{
-- ArrayList<String> movies
-- ArrayList<String> series
+class KreinerFlix{
+- ArrayList<movies> movies
+- ArrayList<series> series
 + void searchMovies()
 + void searchSeries()
 + void searchCategories()

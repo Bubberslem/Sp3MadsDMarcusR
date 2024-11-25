@@ -8,6 +8,7 @@ public class Login {
     private static String input;
 
     public static void login() {
+        TextUI.displayMSG("Please login");
         users.put("Mads", "MonkeyMads");
         users.put("Marcus", "Jesperhaderzoom");
 
@@ -18,9 +19,9 @@ public class Login {
 
 
         while (!loggedIn) {
-            System.out.println("\n1. Login");
-            System.out.println("2. Create a new user");
-            System.out.println("Choose an option: ");
+            TextUI.displayMSG("\n1. Login");
+            TextUI.displayMSG("2. Create a new user");
+            TextUI.displayMSG("Choose an option: ");
             String choice = scanner.nextLine();
 
             if (choice.equals("1")) {
@@ -31,7 +32,7 @@ public class Login {
                 System.out.println("Invalid option. Please try again.");
             }
         }
-        Search search = new Search();
+        KreinerFlix kreinerFlix = new KreinerFlix();
 
         boolean exit = false;
         while (!exit) {
@@ -46,19 +47,19 @@ public class Login {
                 case "1":
                     System.out.println("Enter a search term: ");
                     input = scanner.nextLine();
-                    search.SearchMovies(input);
+                    kreinerFlix.SearchMovies(input);
                     break;
 
                  case "2":
                         System.out.println("Enter a search term: ");
                         input = scanner.nextLine();
-                        search.SearchSeries(input);
+                        kreinerFlix.SearchSeries(input);
 
                         break;
                 case "3":
                     System.out.println("Enter a search term: ");
                      input = scanner.nextLine();
-                    search.SearchSeries(input);
+                    kreinerFlix.SearchSeries(input);
                     break;
 
                 case "4":
@@ -80,7 +81,7 @@ public class Login {
             System.out.print("Enter password: ");
             String password = scanner.nextLine();
 
-            if (authenticate(username, password)) {
+            if (authenticateUser(username, password)) {
                 System.out.println("Login successful! Welcome, " + username + "!");
                 return true;
             } else {
@@ -105,7 +106,7 @@ public class Login {
                 System.out.println("User created sucessfully! You can now login.");
             }
         }
-        public static boolean authenticate (String username, String password){
+        public static boolean authenticateUser (String username, String password){
             return users.containsKey(username) && users.get(username).equals(password);
     }
 }

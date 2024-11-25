@@ -5,21 +5,92 @@ class Main{
 + static void main(String[] args)
 }
 class Login{
-- boolean login()
-+ void createUser()
-+ boolean authenticate()
++ void userLogin()
++ void userRegister()
++ boolean authenticateUser()
+}
+abstract class Media{
+- String mediaName
+- int releaseYear
+- String genre
+- float IMDBScore
+
++ Media( String mediaName, int releaseYear, String genre, float IMDBScore)
++ playMedia(String mediaName)
++ addMediaToList()
++ removeMediaFromList()
+}
+
+class Movie extends Media{
++ Movie(super)
++ int getDuration()
++ void setDuration()
+}
+
+class Series extends Media{
+- ArrayList<Season> seasons
++ Series(super)
+}
+
+class Season{
+- int seasonID
+- ArrayList<Episode> episodes
+}
+
+class Episode{
+- String title
+- int episodeID
++ getters/setters()
 }
 
 class KreinerFlix{
 - ArrayList<movies> movies
 - ArrayList<series> series
++ void LoginOrRegister()
 + void searchMovies()
 + void searchSeries()
 + void searchCategories()
 }
 
+class User{
+- String username
+- String password
+- ArrayList<Media> seen
+- ArrayList<Media> saved
+- int id
+- static int idCount
++ User(String username, String password)
++ getters/setter()
+
+}
 class Movie{
 
 }
+package "util"{
 
+class TextUI{
+- Scanner scan
+
++ void displayMSG(String msg)
++ String promptText (String msg)
++ int promptNumeric (String msg))
+}
+
+class FileIO{
++ HashMap<User> readUserData(String path)
++ void saveData(ArrayList<User> users, String path)
++ HashMap<Media> readMediaData(String path)
+}
+
+KreinerFlix *-- Media
+
+User *-- Media
+
+KreinerFlix *-- User
+
+Series *-- Season
+
+Season *-- Episode
+Login *-- User
+KreinerFlix *-- Login
 @enduml

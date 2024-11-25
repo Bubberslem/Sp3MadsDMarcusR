@@ -1,6 +1,7 @@
 public class Main {
     public static void main(String[]args){
-        Login.login();
+        KreinerFlix KF = new KreinerFlix();
+        KF.loginOrRegister();
 
     }
 }

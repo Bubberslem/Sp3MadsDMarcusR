@@ -4,25 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Search {
-    private final List<String> movies = new ArrayList<>();
-    private final List<String> series = new ArrayList<>();
+public class KreinerFlix {
+    private ArrayList<Movies> movies;
+    private ArrayList<Series> series;
 
-    public Search() {
+    public KreinerFlix() {
 
-        LoadData("data/movies.csv", movies);
-        LoadData("data/series.csv", series);
+      movies = FileIO.readData("data/movies.csv");
+      series = FileIO.readData("data/series.csv");
     }
 
-    private void LoadData(String fileName, List<String> list) {
-        try (Scanner fileScanner = new Scanner(new File(fileName))) {
-            while (fileScanner.hasNextLine()) {
-                list.add(fileScanner.nextLine());
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File " + fileName + " not found. Please make sure it exists.");
+    public void loginOrRegister(){
+        Login.login();
+
+
+    }
+
+
+    public void loadMovies() {
+        ArrayList<String> data = FileIO.readData("data/movie.txt");
+        for (String s : data) {
+            String[] values = s.replace(" ", "").split(";");
+            movies.add(new Movie(values[0], Integer.parseInt(values[1]), getGenres(values[2]), Float.parseFloat(values[3].replace(",", "."))));
         }
     }
+
     public void SearchMovies(String query) {
         System.out.println("\nSearch Results for \"" + query + "\"");
         boolean found = false;
@@ -41,7 +47,7 @@ public class Search {
         System.out.println("\nSearch Results for \"" + query + "\"");
         boolean found = false;
         System.out.println("\nSeries: ");
-        for (String series : series) {
+        for (Series s : series) {
             if (series.toLowerCase().contains(query.toLowerCase())) {
                 System.out.println("-"+series);
                 found = true;

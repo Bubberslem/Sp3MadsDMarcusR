@@ -33,9 +33,9 @@ public class KreinerFlix {
         System.out.println("\nSearch Results for \"" + query + "\"");
         boolean found = false;
         System.out.println("\nMovies: ");
-        for (String movie : movies) {
-            if (movie.toLowerCase().contains(query.toLowerCase())) {
-                System.out.println("-" + movie);
+        for (Movie m : movies) {
+            if (m.toLowerCase().contains(query.toLowerCase())) {
+                System.out.println("-" + m);
                 found = true;
             }
         }
@@ -48,7 +48,7 @@ public class KreinerFlix {
         boolean found = false;
         System.out.println("\nSeries: ");
         for (Series s : series) {
-            if (series.toLowerCase().contains(query.toLowerCase())) {
+            if (s.toLowerCase().contains(query.toLowerCase())) {
                 System.out.println("-"+series);
                 found = true;
             }

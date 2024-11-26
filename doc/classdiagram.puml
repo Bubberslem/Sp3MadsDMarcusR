@@ -61,7 +61,8 @@ class User{
 - static int idCount
 + User(String username, String password)
 + getters/setter()
-
++ void addToSeen()
++ void removeFromSeen()
 }
 class Movie{
 

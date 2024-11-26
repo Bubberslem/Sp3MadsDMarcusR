@@ -6,11 +6,11 @@ public abstract class Media {
     private ArrayList<String> genre;
     private float IMDBScore;
 
-    public Media(float IMDBScore, ArrayList<String> genre, int releaseYear, String mediaName) {
-        this.IMDBScore = IMDBScore;
-        this.genre = genre;
-        this.releaseYear = releaseYear;
+    public Media(String mediaName, int releaseYear, ArrayList<String> genre, float IMDBScore) {
         this.mediaName = mediaName;
+        this.releaseYear = releaseYear;
+        this.genre = genre;
+        this.IMDBScore = IMDBScore;
     }
 
     public String getMediaName() {

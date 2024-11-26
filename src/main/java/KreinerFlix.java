@@ -5,18 +5,22 @@ import java.util.List;
 import java.util.Scanner;
 
 public class KreinerFlix {
+    private  ArrayList<Media> medias;
     private ArrayList<Movie> movies;
     private ArrayList<Series> series;
+    private ArrayList<User> users;
 
     public KreinerFlix() {
-
-      movies = FileIO.readData("data/movies.csv");
-      series = FileIO.readData("data/series.csv");
+        this.users = new ArrayList<User>();
+        this.medias = new ArrayList<Media>();
+        this.movies = new ArrayList<Movie>();
+        this.series = new ArrayList<Series>();
     }
 
-    public void loginOrRegister(){
-        Login.login();
-
+    public void mainMenu(){
+        Login login = new Login();
+        login.loadUserFromFile();
+        login.run();
 
     }
 
@@ -49,7 +53,7 @@ public class KreinerFlix {
     }
 
 
-    public void SearchMovies(String query) {
+   /* public void SearchMovies(String query) {
         System.out.println("\nSearch Results for \"" + query + "\"");
         boolean found = false;
         System.out.println("\nMovies: ");
@@ -76,5 +80,5 @@ public class KreinerFlix {
         if (found) {
             System.out.println("No matches found");
         }
-    }
+    }*/
 }

@@ -10,146 +10,88 @@ import java.util.Scanner;
 
 
 public class Login {
-    private static final HashMap<String,String> users = new HashMap<>();
+    private ArrayList<User> users = new ArrayList<>();
     private static String input;
 
-    public static void login() {
-        TextUI.displayMSG("Please login");
-        users.put("Mads", "MonkeyMads");
-        users.put("Marcus", "Jesperhaderzoom");
-
+    public void run() {
+        System.out.println("Welcome to Kreinerflix!");
+        loadUserFromFile();
         Scanner scanner = new Scanner(System.in);
         boolean loggedIn = false;
 
-        System.out.println("Welcome to Kreinerflix!");
-
-
         while (!loggedIn) {
-            TextUI.displayMSG("\n1. Login");
+            TextUI.displayMSG("1. Login");
             TextUI.displayMSG("2. Create a new user");
             TextUI.displayMSG("Choose an option: ");
             String choice = scanner.nextLine();
 
             if (choice.equals("1")) {
-                loggedIn = login(scanner);
+                loggedIn = login();
             } else if (choice.equals("2")) {
                 createUser(scanner);
             } else {
                 System.out.println("Invalid option. Please try again.");
             }
         }
-        KreinerFlix kreinerFlix = new KreinerFlix();
+        TextUI.displayMSG("You logged in!");
+        saveUserToFile();
+    }
 
-        boolean exit = false;
-        while (!exit) {
-            System.out.println("\n1. Search for Movies");
-            System.out.println("2. Search for Series");
-            System.out.println("3. Browse category");
-            System.out.println("4. Logout");
-            System.out.println("Choose an option: ");
-            String choice = scanner.nextLine();
+    private boolean login() {
+        TextUI.displayMSG("Please log in to continue.");
 
-            switch (choice) {
-                case "1":
-                    System.out.println("Enter a search term: ");
-                    input = scanner.nextLine();
-                    kreinerFlix.SearchMovies(input);
-                    break;
+        String username = TextUI.promptText("Enter username: ");
 
-                 case "2":
-                        System.out.println("Enter a search term: ");
-                        input = scanner.nextLine();
-                        kreinerFlix.SearchSeries(input);
+        String password = TextUI.promptText("Enter password: ");
 
-                        break;
-                case "3":
-                    System.out.println("Enter a search term: ");
-                     input = scanner.nextLine();
-                    kreinerFlix.SearchSeries(input);
-                    break;
-
-                case "4":
-                    exit = true;
-                    System.out.println("Logged out. Goodbye!");
-                    break;
-                default:
-                    System.out.println("Invalid option. Please try again.");
-            }
+        for (User s : users) {
+        if (s.getUsername().equalsIgnoreCase(username) && s.getPassword().equalsIgnoreCase(password)) {
+            System.out.println("Login successful! Welcome, " + username + "!");
+            return true;
         }
-
-            scanner.close();
-        }
-        private static boolean login(Scanner scanner){
-            System.out.println("Please log in to continue.");
-            System.out.print("Enter username: ");
-            String username = scanner.nextLine();
-
-            System.out.print("Enter password: ");
-            String password = scanner.nextLine();
-
-            if (authenticateUser(username, password)) {
-                System.out.println("Login successful! Welcome, " + username + "!");
-                return true;
-            } else {
-                System.out.println("Invalid username or password. Please try again.");
+    }
+                System.out.println("Invalid username or password. Please try again. ");
                 return false;
+}
 
-            }
-        }
+        private void createUser(Scanner scanner){
+            TextUI.displayMSG("Create a new user.");
+            String username = TextUI.promptText("Enter a new username: ");
 
-
-        private static void createUser(Scanner scanner){
-            System.out.println("Create a new user.");
-            System.out.println("Enter a new username: ");
-            String newUsername = scanner.nextLine();
-
-            if (users.containsKey(newUsername)) {
-                System.out.println("Username already exists. Please try again.");
+            if (isUsernameTaken(username)) {
+                TextUI.displayMSG("Username already exists. Please try again.");
             } else {
-                System.out.println("Enter a new password: ");
-                String newPassword = scanner.nextLine();
-                users.put(newUsername, newPassword);
+                String password = TextUI.promptText("Enter a password: ");
+
+                users.add(new User(username, password));
                 System.out.println("User created sucessfully! You can now login.");
             }
         }
-        public static boolean authenticateUser (String username, String password){
-            return users.containsKey(username) && users.get(username).equals(password);
+
+        public boolean isUsernameTaken (String username){
+            for (User s : users) {
+                if (s.getUsername().equalsIgnoreCase(username)) {
+                    return true;
+                }
+            }
+            return false;
     }
 
-    public static class UserFileHandler {
-
-        private static void saveUsersToCSV(List<User> user, String filePath) {
-            try (FileWriter writer = new FileWriter(filePath)) {
-                for (User user : users) {
-                    writer.write(user.getUsername() + "," + user.getPassword() + "\n");
-                }
-                System.out.println("User has been save to " + filePath);
-            } catch (IOException e) {
-                System.err.println("Error saving user: " + e.getMessage());
-            }
+    public void saveUserToFile(){
+        ArrayList<String> userData = new ArrayList<>();
+        for(User s : users){
+            userData.add(s.getUsername()+","+s.getPassword());
         }
+        FileIO.saveData(userData,"data/userdata.csv");
     }
 
-    public static class UserFile {
-
-        private static String filePath;
-
-        private static List<User> loadUsersFromCSV(String filePath) {
-            UserFile.filePath = filePath;
-            List<User> users = new ArrayList<>();
-            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split(",");
-                    if (parts.length == 2) {
-                        users.add(new User(parts[0], parts[1]));
-                    }
-                }
-                System.out.println("User has loaded successfully from " + filePath);
-            } catch (IOException e) {
-                System.err.println("Error loading users: " + e.getMessage());
+    public void loadUserFromFile(){
+        ArrayList<String> userData = FileIO.readData("data/userdata.csv");
+        for (String s : userData) {
+            String[] data = s.split(",");
+            if (data.length == 2) {
+                users.add(new User(data[0], data[1]));
             }
-            return users;
         }
     }
 }

@@ -1,5 +1,11 @@
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -108,5 +114,42 @@ public class Login {
         }
         public static boolean authenticateUser (String username, String password){
             return users.containsKey(username) && users.get(username).equals(password);
+    }
+
+    public static class UserFileHandler {
+
+        private static void saveUsersToCSV(List<User> user, String filePath) {
+            try (FileWriter writer = new FileWriter(filePath)) {
+                for (User user : users) {
+                    writer.write(user.getUsername() + "," + user.getPassword() + "\n");
+                }
+                System.out.println("User has been save to " + filePath);
+            } catch (IOException e) {
+                System.err.println("Error saving user: " + e.getMessage());
+            }
+        }
+    }
+
+    public static class UserFile {
+
+        private static String filePath;
+
+        private static List<User> loadUsersFromCSV(String filePath) {
+            UserFile.filePath = filePath;
+            List<User> users = new ArrayList<>();
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if (parts.length == 2) {
+                        users.add(new User(parts[0], parts[1]));
+                    }
+                }
+                System.out.println("User has loaded successfully from " + filePath);
+            } catch (IOException e) {
+                System.err.println("Error loading users: " + e.getMessage());
+            }
+            return users;
+        }
     }
 }

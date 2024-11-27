@@ -11,7 +11,12 @@ import java.util.Scanner;
 
 public class Login {
     private ArrayList<User> users = new ArrayList<>();
-    private static String input;
+    private User currentUser;
+
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
 
     public void run() {
         System.out.println("Welcome to Kreinerflix!");
@@ -28,13 +33,13 @@ public class Login {
             if (choice.equals("1")) {
                 loggedIn = login();
             } else if (choice.equals("2")) {
-                createUser(scanner);
+                createUser();
             } else {
                 System.out.println("Invalid option. Please try again.");
             }
         }
         TextUI.displayMSG("You logged in!");
-        saveUserToFile();
+
     }
 
     private boolean login() {
@@ -47,6 +52,7 @@ public class Login {
         for (User s : users) {
         if (s.getUsername().equalsIgnoreCase(username) && s.getPassword().equalsIgnoreCase(password)) {
             System.out.println("Login successful! Welcome, " + username + "!");
+            currentUser = s;
             return true;
         }
     }
@@ -54,7 +60,7 @@ public class Login {
                 return false;
 }
 
-        private void createUser(Scanner scanner){
+        private void createUser(){
             TextUI.displayMSG("Create a new user.");
             String username = TextUI.promptText("Enter a new username: ");
 

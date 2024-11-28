@@ -83,12 +83,36 @@ public class Login {
             return false;
     }
 
+    public void terminate(){
+        saveUserToFile();
+        saveUserMediaToFile();
+    }
+
     public void saveUserToFile(){
         ArrayList<String> userData = new ArrayList<>();
         for(User s : users){
             userData.add(s.getUsername()+","+s.getPassword());
         }
         FileIO.saveData(userData,"data/userdata.csv");
+    }
+    public void saveUserMediaToFile() {
+        ArrayList<String> seenMediaData = new ArrayList<>();
+        ArrayList<String> savedMediaData = new ArrayList<>();
+
+        for (User u : users) {
+            // Save watched media for this user
+            for (Media media : u.getSeenMedia()) {
+                seenMediaData.add(u.getUsername() + ";" + media.getMediaName() + ";" + media.getIMDBScore());
+            }
+
+            //Save saved media for this user
+            for (Media m : u.getSavedMedia()) {
+                savedMediaData.add(u.getUsername() + ";" + m.getMediaName() + ";" + m.getIMDBScore());
+            }
+        }
+        // Save data in files
+        FileIO.saveData(seenMediaData, "data/seenMedia.csv");
+        FileIO.saveData(savedMediaData, "data/savedMedia.csv");
     }
 
     public void loadUserFromFile(){

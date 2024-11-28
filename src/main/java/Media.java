@@ -30,7 +30,7 @@ public abstract class Media {
     }
 
     public ArrayList<String> getGenre() {
-        return genre;
+        return this.genre;
     }
 
     public void setGenre(ArrayList<String> genre) {
